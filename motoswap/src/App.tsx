@@ -4,6 +4,7 @@ import { useQuery } from 'react-query'
 import axios from 'axios'
 
 //Components
+import Item from './Item/Item';
 import Drawer from '@mui/material/Drawer';
 import LinearProgress from '@mui/material/LinearProgress';
 import Grid from '@mui/material/Grid';
@@ -32,7 +33,30 @@ const getProducts = async (): Promise<CartItemType[]> =>
 
 
 const App = () => {
-  // let [products, setProducts] = useState([{}])
+  
+  const { data, isLoading, error } = useQuery<CartItemType[]>(
+    'products',
+    getProducts
+    );
+    console.log(data);
+
+    const getTotalItems = () => null; 
+    const handlAddToCart = (clickedItem: CartItemType) => null; 
+    const handleRemoveFromCart = () => null; 
+
+    if (isLoading) return <LinearProgress />;
+    if (error) return <div>'Something went wrong ...'</div>
+ 
+  return (
+    <div className="App">
+    Start 
+    </div>
+  );
+}
+
+export default App;
+
+// let [products, setProducts] = useState([{}])
 
   // const getProducts = () => {
   //   axios
@@ -43,22 +67,6 @@ const App = () => {
   //     )
   //     .catch((error) => console.error(error))
   // }
-
-  const { data, isLoading, error } = useQuery<CartItemType[]>(
-    'products',
-    getProducts
-    );
-    console.log(data);
- 
-  // useEffect(() => {
+    // useEffect(() => {
   //   getProducts()
   // }, [])
-
-  return (
-    <div className="App">
-    Start 
-    </div>
-  );
-}
-
-export default App;
