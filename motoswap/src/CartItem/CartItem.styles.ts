@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
     }
 
     .information, 
-    .button {
+    .buttons {
         display: flex; 
         justify-content: space-between; 
     }
