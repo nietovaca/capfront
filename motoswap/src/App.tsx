@@ -5,6 +5,7 @@ import axios from 'axios'
 
 //Components
 import Item from './Item/Item';
+import Cart from './Cart/Cart'
 import Drawer from '@mui/material/Drawer';
 import LinearProgress from '@mui/material/LinearProgress';
 import Grid from '@mui/material/Grid';
@@ -23,6 +24,7 @@ export type CartItemType = {
   image: string; 
   price: number; 
   in_stock: boolean; 
+  amount: number;
   is_active: boolean; 
   created: string;
   updated: string; 
@@ -41,8 +43,11 @@ const App = () => {
     );
     console.log(data);
 
-    const getTotalItems = (items: CartItemType[]) => null; 
+    const getTotalItems = (items: CartItemType[]) => 
+      items.reduce((ack: number, item) => ack + item.amount, 0); 
+
     const handleAddToCart = (clickedItem: CartItemType) => null; 
+
     const handleRemoveFromCart = () => null; 
 
     if (isLoading) return <LinearProgress />;
@@ -50,11 +55,13 @@ const App = () => {
  
   return (
     <Wrapper className="App">
-      <Drawer anchor='right' open={cartOpen} onClose={()=> setCartOpen(false)}>
-        Cart goes here
+      <Drawer anchor='right' open={cartOpen} onClose={() => setCartOpen(false)}>
+        <Cart cartItems={cartItems} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} />
       </Drawer>  
-      <StyledButton onClick={()=> setCartOpen(true)}>
-        <Badge badgeContent={getTotalItems(cartItems)} color='error'></Badge>
+      <StyledButton onClick={() => setCartOpen(true)}>
+        <Badge badgeContent={getTotalItems(cartItems)} color='error'>
+          <AddShoppingCartIcon />
+        </Badge>
       </StyledButton>
       <Grid container spacing={3}>
         {data?.map(item => (
