@@ -25,24 +25,34 @@ export type CartItemType = {
   is_active: boolean; 
   created: string;
   updated: string; 
-}
+};
+
+const getProducts = async (): Promise<CartItemType[]> =>
+    await (await fetch('http://backcap.herokuapp.com/api/products')).json();
+
 
 const App = () => {
-  let [products, setProducts] = useState([])
+  // let [products, setProducts] = useState([{}])
 
-  const getProducts = () => {
-    axios
-      .get('http://backcap.herokuapp.com/api/products')
-      .then(
-        (response) => setProducts(response.data),
-        (err) => console.log(err)
-      )
-      .catch((error) => console.error(error))
-  }
+  // const getProducts = () => {
+  //   axios
+  //     .get('http://backcap.herokuapp.com/api/products')
+  //     .then(
+  //       (response) => setProducts(response.data),
+  //       (err) => console.log(err)
+  //     )
+  //     .catch((error) => console.error(error))
+  // }
 
-  useEffect(() => {
-    getProducts()
-  }, [])
+  const { data, isLoading, error } = useQuery<CartItemType[]>(
+    'products',
+    getProducts
+    );
+    console.log(data);
+ 
+  // useEffect(() => {
+  //   getProducts()
+  // }, [])
 
   return (
     <div className="App">
