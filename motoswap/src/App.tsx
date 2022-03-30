@@ -6,6 +6,7 @@ import axios from 'axios'
 //Components
 import Item from './Item/Item';
 import Cart from './Cart/Cart'
+import Add from './CrudComponents/AddProduct'
 import Drawer from '@mui/material/Drawer';
 import LinearProgress from '@mui/material/LinearProgress';
 import Grid from '@mui/material/Grid';
@@ -27,17 +28,28 @@ export type CartItemType = {
   amount: number;
   is_active: boolean; 
   created: string;
-  updated: string; 
+  updated: string;
 };
 
-const getProducts = async (): Promise<CartItemType[]> =>
-    await (await fetch('http://backcap.herokuapp.com/api/products')).json();
-
+interface Product {
+  title: string;
+  description: string;
+  image: string;
+  price: number;
+  amount: number;
+};
 
 const App = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([] as CartItemType[])
+  let [product, setProduct] = useState([] as Product[])
+
+  //Get from API 
+  const getProducts = async (): Promise<CartItemType[]> =>
+  await (await fetch('http://backcap.herokuapp.com/api/products')).json();  
+
   const { data, isLoading, error } = useQuery<CartItemType[]>(
+    //useQuery 
     'products',
     getProducts
     );
@@ -78,7 +90,31 @@ const App = () => {
 
     if (isLoading) return <LinearProgress />;
     if (error) return <div>'Something went wrong ...'</div>
- 
+  
+  const handleCreate = (addProduct: any) => {
+    console.log(addProduct)
+    axios
+      .post('http://backcap.herokuapp.com/api/products', addProduct)
+      .then((response) => {
+        console.log(response)
+        getProducts()
+        
+      }).catch((error) => {
+        if(error.response){
+          console.log(error.response.data);
+          
+        }
+      })
+  }
+
+  // const handleDelete = (event) => {
+  //   axios
+  //     .delete('http://backcap.herokuapp.com/api/products' + event.target.value)
+  //     .then((response) => {
+  //       getProducts()
+  //     })
+  // }
+
   return (
     <Wrapper className="App">
       <Drawer anchor='right' open={cartOpen} onClose={() => setCartOpen(false)}>
@@ -98,6 +134,11 @@ const App = () => {
             <Item item={item} handleAddToCart={handleAddToCart} />
           </Grid>
         ))}
+      </Grid>
+      <Grid container spacing={2}>
+        <Grid item sm={3}>
+          <Add handleCreate={handleCreate} />
+        </Grid>
       </Grid>
     </Wrapper>
   );
