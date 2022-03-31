@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 const Add = (props) => {
     let emptyProduct = {
@@ -67,7 +67,7 @@ export default Add;
 // author = models.CharField(max_length=255, default='admin')
 // in_stock = models.BooleanField(default=True)
 // is_active = models.BooleanField(default=True)
-{/* <select value={product.category} htmlFor="category" name='category' onChange={handleChange}>
-                    <option value='new'>New</option>
-                    <option value='used'>Used</option>
-                </select>     */}
+// {/* <select value={product.category} htmlFor="category" name='category' onChange={handleChange}>
+//                     <option value='new'>New</option>
+//                     <option value='used'>Used</option>
+//                 </select>     */}

@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useQuery } from 'react-query'
 import axios from 'axios'
 
@@ -42,7 +42,6 @@ interface Product {
 const App = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([] as CartItemType[])
-  let [product, setProduct] = useState([] as Product[])
 
   //Get from API 
   const getProducts = async (): Promise<CartItemType[]> =>
@@ -107,13 +106,13 @@ const App = () => {
       })
   }
 
-  const handleDelete = (event:any) => {
-    axios
-      .delete('http://backcap.herokuapp.com/api/products' + event.target.value)
-      .then((response) => {
-        getProducts()
-      })
-  }
+  // const handleDelete = (event:any) => {
+  //   axios
+  //     .delete('http://backcap.herokuapp.com/api/products' + event.target.value)
+  //     .then((response) => {
+  //       getProducts()
+  //     })
+  // }
 
   return (
     <Wrapper className="App">
