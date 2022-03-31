@@ -107,13 +107,13 @@ const App = () => {
       })
   }
 
-  // const handleDelete = (event) => {
-  //   axios
-  //     .delete('http://backcap.herokuapp.com/api/products' + event.target.value)
-  //     .then((response) => {
-  //       getProducts()
-  //     })
-  // }
+  const handleDelete = (event:any) => {
+    axios
+      .delete('http://backcap.herokuapp.com/api/products' + event.target.value)
+      .then((response) => {
+        getProducts()
+      })
+  }
 
   return (
     <Wrapper className="App">
