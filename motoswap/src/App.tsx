@@ -40,7 +40,7 @@ const App = () => {
   await (await fetch('http://backcap.herokuapp.com/api/products')).json();  
 
   const { data, isLoading, error } = useQuery<CartItemType[]>(
-    //useQuery 
+    useQuery, 
     'products',
     getProducts
     );
