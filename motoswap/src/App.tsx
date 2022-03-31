@@ -31,14 +31,6 @@ export type CartItemType = {
   updated: string;
 };
 
-interface Product {
-  title: string;
-  description: string;
-  image: string;
-  price: number;
-  amount: number;
-};
-
 const App = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([] as CartItemType[])
